@@ -1,0 +1,15 @@
+default-targetBranch: &id001 master
+default-resources: &id002
+  - group: rbac.authorization.k8s.io
+    kind: Role
+  - group: rbac.authorization.k8s.io
+    kind: RoleBinding
+projects:
+  - name: project1
+    targetBranch: *id001
+  - name: project2
+    targetBranch: *id001
+    resources: *id002
+  - name: project3
+    targetBranch: *id001
+    resources: *id002
