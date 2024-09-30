@@ -11,6 +11,7 @@ import java.util.Set;
 import org.yaml.snakeyaml.DumperOptions;
 import org.yaml.snakeyaml.introspector.Property;
 import org.yaml.snakeyaml.nodes.NodeTuple;
+import org.yaml.snakeyaml.nodes.ScalarNode;
 import org.yaml.snakeyaml.nodes.Tag;
 import org.yaml.snakeyaml.representer.Representer;
 
@@ -103,7 +104,12 @@ public class YamlRepresenter extends Representer
             }
             else if ("defaultTargetBranch".equals(property.getName()))
             {
-                return new NodeTuple(representData(TARGET_BRANCH_ANCHOR_YAML_PROPERTY), defaultNode.getValueNode());
+                return new NodeTuple(representData(TARGET_BRANCH_ANCHOR_YAML_PROPERTY),
+                    representData("&" + TARGET_BRANCH_ANCHOR_YAML_PROPERTY + " " + ((ScalarNode) defaultNode.getValueNode()).getValue()));
+            }
+            else if ("targetBranch".equals(property.getName()))
+            {
+                return new NodeTuple(representData("targetBranch"), representData("*" + TARGET_BRANCH_ANCHOR_YAML_PROPERTY));
             }
             else
             {
